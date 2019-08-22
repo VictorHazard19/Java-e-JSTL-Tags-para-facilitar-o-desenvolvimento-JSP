@@ -1,7 +1,5 @@
 # JSTL 
 
-  [Documentação JSTL](https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/)
-
 ## 1.1 - Conceito
 
 - JSPs cuidam da parte visual de um projeto Java Web
@@ -184,3 +182,11 @@
  ```
  
 - tag muito útil para a criação de menus, rodapés e cabeçalhos.
+
+### Outras Pacotes da JSTL
+
+- Existem outros pacotes da JSTL, como o pacote **xml** e o pacote **sql**, porém o uso desses pacotes não é recomendado.
+
+- Acessar SQL e manipular XML tendem a ser tarefas complicadas e de alta importância para o projeto. Por esse motivo, é comum optarmos pela criação de classes Java especializadas nessas tarefas.
+
+Para outras pesquisas, acessar a [Documentação JSTL](https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/)
