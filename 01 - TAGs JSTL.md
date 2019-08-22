@@ -175,7 +175,7 @@
   
 - Caso ele não encontre o arquivo equivalente, ele utiliza o arquivo padrão **messages.properties**
 
-### Reutiização de Páginas
+### Reutilização de Páginas
 
 - Para reutilizar uma página (um rodapé por exemplo) e não ter que colar o trecho dessa reutilização em todas as paginas, basta utilizar a tag **c:import**
 
