@@ -1,5 +1,7 @@
 # JSTL 
 
+  [Documentação JSTL](https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/)
+
 ## 1.1 - Conceito
 
 - JSPs cuidam da parte visual de um projeto Java Web
@@ -20,6 +22,16 @@
  - Não se trata de um endereço, apena o nome da biblioteca **core** da JSTL
  
  - Toda vez que usamos o Core da JSTL, o prefixo usado é o **c**
+ 
+ - Para formatação, usa-se o pacote fmt com o prefixo de mesmo nome:
+ 
+ ```java
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+```
+
+ - O pacote FMT é conjunto de tags que auxiliam na formatação do código.
+
+ - Com o pacote fmt é possível formatar a data, valores e etc. 
  
  - A JSTL trabalha em conjunto com a **El** - Expression Language
  
@@ -88,4 +100,87 @@
 ```java 
     <a href="<c:url value='/produto/formulario'></c:url>">Adicionar um produto</a>
    ```
-	
+
+### Definindo Variáveis
+
+- A tag "set" serve para definir uma variável. Ela é útil quando temos um valor que será repetido por todo o programa, e guardar numa variável pode ser importante.
+
+- A tag "out" imprime o conteúdo da variável. Seu comportamento é idêntico ao da EL: ${nome}.
+
+```java 
+    <c:set var="nome" value="João da Silva" />
+    <c:out value="${nome}" />
+   ```
+
+### Formatando Datas
+
+- É possível formar a data utilizando-se de diverso patterns:
+
+```java 
+    <td><fmt:formatDate value="${p.dataInicioVenda.time}" pattern="dd/MM/yyyy"/></td>
+    // 22/08/2019
+   ```
+   
+ ```java 
+    <td><fmt:formatDate value="${p.dataInicioVenda.time}" pattern="EEEE, dd 'de' MMMM 'de' yyyy"/></td>
+    // Quinta-feira, 22 de Agosto de 2019
+   ```
+
+ ### Formatando Números
+ 
+ - Da mesma maneira, é possível formatar números utilizando a JSTL, EL e patterns
+ 
+  ```java 
+    <td><fmt:formatNumber value="${p.preco}" type="currency"/></td>
+    // Quinta-feira, 22 de Agosto de 2019
+   ```
+ - Ela é realmente bem útil e prática. Se fôssemos fazer isso na mão com Java, gastaríamos algumas linhas para tal; com a JSTL isso fica escondido, e nossa JSP precisa agora só de 1 linha para formatar o número.
+ 
+ ### Internacionalização
+
+- Outro grande recurso da JSTL é a internacionalização e a centralização das mensagens da aplicação
+
+- Primeiro é necessário 'avisar' a JSTL que teremos um arquivo de configuração para a internacionalização - Adicionar ao **web.xml** o seguinte contexto:
+
+ ```java
+  <context-param>
+    <param-name>
+      javax.servlet.jsp.jstl.fmt.localizationContext
+    </param-name>
+    <param-value>messages</param-value>
+  </context-param>
+  ```
+  
+- O arquivo **messages** (pode ser qualquer nome) deverá ter a extensão **.properties** e conterá todas as palavras que serão exibidas pela aplicação.
+
+- Ele deve ficar na pasta **src** do projeto.
+
+- O arquivo será um conjunto de chaves e valores (Chaves são as referências que serão pesquisadas pela JSTL e os Valores são os textos que serão exibidos) *Nome de chaves não podem ter espaço.*
+
+- Para incluir um texto na aplicação, utilizamos a tag **message** da JSTL:
+
+ ```java
+   <fmt:message key="mensagem.bemvindo" />
+ ```
+- Caso a JSTL não encontre o arquivo de uma liguagem especifica, ele utiliza o arquivo padrão (nomeArquivo.properties - No caso, messages.properties)
+
+- Para internacionalizar a aplicação, basta criar uma cópia do arquivo e renomea-la com o mesmo prefixo (no caso **messages**) e adiciona **_lingua** (_EN, _UK, _DE, _IT ....)
+
+- Neste novo arquivo, deve-se manter as mesmas chaves e alterar os valores para a língua em questão.
+
+- A JSTL vai validar qual a linguagem do browser onde a aplicação está rodando e vai tentar procurar o arquivo equivalente.
+
+ (Se o browser está em inglês, ele vai buscar o arquivo messages_en.properties
+  Se estiver em alemão, tenta buscar o arquivo messages_de.properties)
+  
+- Caso ele não encontre o arquivo equivalente, ele utiliza o arquivo padrão **messages.properties**
+
+### Reutiização de Páginas
+
+- Para reutilizar uma página (um rodapé por exemplo) e não ter que colar o trecho dessa reutilização em todas as paginas, basta utilizar a tag **c:import**
+
+ ```java
+ <c:url value"/caminho/pagina.jsp"/>
+ ```
+ 
+- tag muito útil para a criação de menus, rodapés e cabeçalhos.
